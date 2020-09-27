@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import firebase from "firebase/app";
 export default {
   data() {
     return {
@@ -113,7 +114,15 @@ export default {
     },
     signUp() {
       // @TODO signUn logic will come here
-      console.log("sign up", this.email, this.password);
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then(response => {
+          console.log("Success! ", response);
+        })
+        .catch(error => {
+          console.log("Failed!", error);
+        });
     }
   }
 };
