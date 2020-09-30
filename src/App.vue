@@ -10,8 +10,15 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import Navbar from "./components/Navbar";
 export default {
-  components: { Navbar }
+  components: { Navbar },
+  methods: {
+    ...mapActions(["authAction"])
+  },
+  mounted() {
+    this.authAction();
+  }
 };
 </script>

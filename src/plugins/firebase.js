@@ -14,8 +14,5 @@ const config = {
   appId: process.env.VUE_APP_APP_ID
 };
 
-console.log("api key", config.apiKey);
-console.log("env", process.env.VUE_APP_API_KEY);
-
 // Init our firebase app
 firebase.initializeApp(config);

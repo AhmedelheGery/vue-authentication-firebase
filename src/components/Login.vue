@@ -1,5 +1,5 @@
 <template>
-  <div class="columns">
+  <div class="columns" v-if="!isUserAuth">
     <div class="column is-half is-offset-one-quarter">
       <div class="card">
         <div class="card-content">
@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -68,6 +69,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["signInAction"]),
     resetError() {
       this.validationErrors = [];
     },
@@ -96,9 +98,11 @@ export default {
       }
     },
     signIn() {
-      // @TODO signIn logic will come here
-      console.log("sign in", this.email, this.password);
+      this.signInAction({ email: this.email, password: this.password });
     }
+  },
+  computed: {
+    ...mapGetters(["isUserAuth"])
   }
 };
 </script>

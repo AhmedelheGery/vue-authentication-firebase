@@ -1,5 +1,5 @@
 <template>
-  <div class="columns">
+  <div class="columns" v-if="!isUserAuth">
     <div class="column is-half is-offset-one-quarter">
       <div class="card">
         <div class="card-content">
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import firebase from "firebase/app";
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -82,6 +82,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["signUpAction"]),
     resetError() {
       this.validationErrors = [];
     },
@@ -113,17 +114,11 @@ export default {
       }
     },
     signUp() {
-      // @TODO signUn logic will come here
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(response => {
-          console.log("Success! ", response);
-        })
-        .catch(error => {
-          console.log("Failed!", error);
-        });
+      this.signUpAction({ email: this.email, password: this.password });
     }
+  },
+  computed: {
+    ...mapGetters(["isUserAuth"])
   }
 };
 </script>

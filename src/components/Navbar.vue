@@ -14,17 +14,27 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <router-link
-              v-for="item of navItems"
-              :key="item.name"
-              :to="item.to"
-              class="button is-primary"
-            >
-              <span class="icon">
-                <i :class="`fas fa-${item.icon}`"></i>
-              </span>
-              <strong>{{ item.name }}</strong>
-            </router-link>
+            <template v-if="!isUserAuth">
+              <router-link
+                v-for="item of navItems"
+                :key="item.name"
+                :to="item.to"
+                class="button is-primary"
+              >
+                <span class="icon">
+                  <i :class="`fas fa-${item.icon}`"></i>
+                </span>
+                <strong>{{ item.name }}</strong>
+              </router-link>
+            </template>
+            <template v-if="isUserAuth">
+              <button class="button is-primary" @click="signOut">
+                <span class="icon">
+                  <i class="fas fa-sign-out-alt"></i>
+                </span>
+                <strong>Logout</strong>
+              </button>
+            </template>
           </div>
         </div>
       </div>
@@ -33,6 +43,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -41,6 +52,15 @@ export default {
         { name: "Register", to: "/register", icon: "key" }
       ]
     };
+  },
+  computed: {
+    ...mapGetters(["isUserAuth"])
+  },
+  methods: {
+    ...mapActions(["signOutAction"]),
+    signOut() {
+      this.signOutAction();
+    }
   }
 };
 </script>
