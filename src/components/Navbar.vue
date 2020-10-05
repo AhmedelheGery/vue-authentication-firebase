@@ -34,6 +34,12 @@
                 </span>
                 <strong>Logout</strong>
               </button>
+              <router-link to="/protect" class="button is-primary">
+                <span class="icon">
+                  <i :class="`fas fa-lock`"></i>
+                </span>
+                <strong>About</strong>
+              </router-link>
             </template>
           </div>
         </div>
